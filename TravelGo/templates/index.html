@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelGo | Escape the Ordinary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-color: #00d2ff;
+            --main-gradient: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Open Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+
+        nav {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: var(--accent-color);
+            color: #000;
+        }
+
+        .btn-auth {
+            border: 2px solid var(--accent-color);
+        }
+
+        .welcome-content {
+            width: 95%;
+            max-width: 1100px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 4rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .tagline {
+            font-size: 1.4rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        /* Updated Portal Grid for 4 Items */
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 25px 15px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.25);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .card i {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            display: block;
+            font-style: normal;
+        }
+
+        .card h3 {
+            margin: 5px 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .card p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin: 0;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 992px) {
+            .portal-grid { grid-template-columns: repeat(2, 1fr); }
+            h1 { font-size: 3rem; }
+        }
+
+        @media (max-width: 500px) {
+            .portal-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 2.2rem; }
+            .hero-section { height: auto; padding: 100px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="logo">TravelGo</a>
+        <div class="nav-links">
+            {% if logged_in %}
+                <a href="/dashboard">Dashboard</a>
+                <a href="/logout" class="btn-auth">Logout</a>
+            {% else %}
+                <a href="/login">Login</a>
+                <a href="/register" class="btn-auth">Join Now</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="welcome-content">
+            <h1>TravelGo</h1>
+            <p class="tagline">Cloud-powered. Adventure-ready. Your next journey starts here.</p>
+            
+            <div class="portal-grid">
+                <a href="/buses" class="card">
+                    <i>🚌</i>
+                    <h3>Buses</h3>
+                    <p>Comfortable road trips</p>
+                </a>
+
+                <a href="/train" class="card">
+                    <i>🚂</i>
+                    <h3>Trains</h3>
+                    <p>Classic scenic routes</p>
+                </a>
+
+                <a href="/flights" class="card">
+                    <i>✈️</i>
+                    <h3>Flights</h3>
+                    <p>Fly across the globe</p>
+                </a>
+
+                <a href="/hotels" class="card">
+                    <i>🏨</i>
+                    <h3>Hotels</h3>
+                    <p>Luxury stays for you</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

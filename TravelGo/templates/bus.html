@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelEase | Search Buses</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff4d4d;
+            --overlay-dark: rgba(0, 0, 0, 0.6);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            /* Replace the URL below with your actual image link */
+            background: linear-gradient(var(--overlay-dark), var(--overlay-dark)), 
+                        url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            background: var(--glass-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        h2, h3 {
+            color: #222;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        /* Form Styling */
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary-color);
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .btn-search {
+            background: var(--primary-color);
+            color: white;
+            padding: 15px;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        .btn-search:hover {
+            background: #e63939;
+            transform: translateY(-2px);
+        }
+
+        /* Results Styling */
+        .results-section {
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        .bus-card {
+            background: #f9f9f9;
+            border-left: 5px solid var(--primary-color);
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .bus-info p {
+            margin: 5px 0;
+        }
+
+        .bus-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+
+        .price-tag {
+            font-weight: 600;
+            color: #2ecc71;
+            font-size: 1.2rem;
+        }
+
+        .btn-book {
+            background: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .btn-book:hover {
+            background: #000;
+        }
+
+        @media (max-width: 480px) {
+            .bus-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Find Your Next Journey</h2>
+        
+        <form class="search-form" method="POST">
+            <div class="input-group">
+                <label>Source City</label>
+                <input type="text" name="source" placeholder="E.g. Mumbai" required>
+            </div>
+            
+            <div class="input-group">
+                <label>Destination City</label>
+                <input type="text" name="destination" placeholder="E.g. Goa" required>
+            </div>
+            
+            <button type="submit" class="btn-search">Search Buses</button>
+        </form>
+
+        {% if buses %}
+        <div class="results-section">
+            <h3>Available Buses</h3>
+            {% for bus in buses %}
+            <div class="bus-card">
+                <div class="bus-info">
+                    <p class="bus-name">{{ bus.name }}</p>
+                    <p>{{ bus.details }}</p>
+                    <p class="price-tag">₹{{ bus.price }}</p>
+                </div>
+                
+                <form action="/book" method="POST">
+                    <input type="hidden" name="type" value="Bus">
+                    <input type="hidden" name="source" value="{{ source }}">
+                    <input type="hidden" name="destination" value="{{ destination }}">
+                    <input type="hidden" name="details" value="{{ bus.name }} {{ bus.details }}">
+                    <input type="hidden" name="price" value="{{ bus.price }}">
+                    <button type="submit" class="btn-book">Book Now</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
