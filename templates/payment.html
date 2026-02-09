@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment | TravelGo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --success-green: #27ae60;
+            --trust-blue: #2c3e50;
+            --bg-light: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .payment-container {
+            background: white;
+            width: 90%;
+            max-width: 450px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid #e1e8ed;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h2 {
+            margin: 0;
+            color: var(--trust-blue);
+            font-size: 1.5rem;
+        }
+
+        /* Booking Summary Box */
+        .booking-summary {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--success-green);
+        }
+
+        .summary-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .total-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--success-green);
+            margin: 0;
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        select, input {
+            padding: 12px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input:focus {
+            border-color: #3b82f6;
+        }
+
+        .btn-pay {
+            background: var(--trust-blue);
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-pay:hover {
+            background: #1a252f;
+        }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 20px;
+        }
+
+        .secure-badge i {
+            color: var(--success-green);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="payment-container">
+        <div class="header">
+            <h2>Complete Your Booking</h2>
+        </div>
+
+        <div class="booking-summary">
+            <span class="summary-label">Trip Details</span>
+            <span class="summary-value">{{ booking.details }}</span>
+            
+            <span class="summary-label">Amount to Pay</span>
+            <p class="total-price">₹{{ booking.price }}</p>
+        </div>
+
+        <form action="/payment" method="POST">
+            <label for="method">Select Payment Method</label>
+            <select name="method" id="method" required>
+                <option value="UPI">UPI (Google Pay, PhonePe)</option>
+                <option value="Credit Card">Credit / Debit Card</option>
+                <option value="Net Banking">Net Banking</option>
+            </select>
+
+            <label for="reference">Transaction Reference</label>
+            <input type="text" name="reference" placeholder="Enter Transaction ID" required>
+
+            <button type="submit" class="btn-pay">Confirm & Pay Securely</button>
+        </form>
+
+        <div class="secure-badge">
+            <span>🔒 256-bit SSL Encrypted Secure Payment</span>
+        </div>
+    </div>
+
+</body>
+</html>

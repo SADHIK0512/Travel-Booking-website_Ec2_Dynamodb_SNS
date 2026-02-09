@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelGo | Escape the Ordinary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-color: #00d2ff;
+            --main-gradient: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            --pink-bg: #fce4ec; /* Matches the lower section in your image */
+        }
+
+        body, html {
+            margin: 0; padding: 0; font-family: 'Open Sans', sans-serif;
+            background-color: var(--pink-bg);
+        }
+
+        /* Navigation */
+        nav {
+            background: #004aad; /* Dark blue bar from image */
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .logo { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.5rem; color: white; text-decoration: none; }
+        .nav-links a { color: white; text-decoration: none; margin-left: 20px; font-size: 0.9rem; font-weight: 600; }
+
+        /* Hero Section */
+        .hero {
+            height: 400px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                        url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 { font-family: 'Montserrat', sans-serif; font-size: 3rem; margin: 0; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; margin-top: 10px; }
+
+        /* Feature Cards Grid */
+        .container {
+            max-width: 1200px;
+            margin: -50px auto 50px auto; /* Overlaps hero slightly */
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: left;
+            color: #333;
+            transition: 0.3s;
+        }
+
+        .feature-card:hover { transform: translateY(-5px); }
+
+        .icon { font-size: 1.5rem; margin-right: 10px; vertical-align: middle; }
+        .feature-card h3 { 
+            display: inline-block; 
+            font-family: 'Montserrat', sans-serif; 
+            color: #004aad; 
+            margin: 0 0 15px 0;
+        }
+        
+        .feature-card p { font-size: 0.95rem; line-height: 1.6; color: #666; }
+        .promo-code { font-weight: 700; color: #333; margin-top: 15px; display: block; }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; margin-top: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="logo">TravelGo</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact Us</a>
+            {% if logged_in %}
+                <a href="/dashboard">Dashboard</a>
+            {% else %}
+                <a href="/login">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Book Bus, Train, Flights & Hotels</h1>
+        <p>Your journey starts here. Find the best travel deals!</p>
+    </div>
+
+    <div class="container">
+        <div class="feature-card">
+            <span class="icon">🔥</span>
+            <h3>Featured Deals</h3>
+            <p>Flat 30% off on bus tickets for new users. Book now and save big!</p>
+            <span class="promo-code">Use Code: TRAVEL30</span>
+        </div>
+
+        <div class="feature-card">
+            <span class="icon">🛋️</span>
+            <h3>Live Seat Availability</h3>
+            <p>Choose your seats in real-time just like movie ticket booking. No more waiting!</p>
+        </div>
+
+        <div class="feature-card">
+            <span class="icon">✈️</span>
+            <h3>Hotels Near You</h3>
+            <p>Top-rated hotels near your destination. Filter by rating and price for the best stay.</p>
+        </div>
+    </div>
+
+    <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/about">About Us</a>
+    <a href="/contact">Contact Us</a>
+    {% if logged_in %}
+        <a href="/dashboard">Dashboard</a>
+    {% else %}
+        <a href="/login">Login</a>
+    {% endif %}
+</div>
+
+<div id="about" style="padding: 80px 20px; background: white; text-align: center;">
+    <h2 style="font-family: 'Montserrat'; color: #004aad;">About TravelGo</h2>
+    <p style="max-width: 800px; margin: 20px auto; color: #666; line-height: 1.8;">
+        TravelGo is a cutting-edge, cloud-powered travel platform designed to make your journey 
+        as seamless as possible. Built with Python, Flask, and AWS, we offer real-time 
+        booking for buses, trains, flights, and hotels.
+    </p>
+</div>
+
+<div id="contact" style="padding: 80px 20px; background: #f4f4f4; text-align: center;">
+    <h2 style="font-family: 'Montserrat'; color: #004aad;">Contact Us</h2>
+    <p style="color: #666; margin-bottom: 30px;">Have questions? We're here to help.</p>
+    <form action="/contact" method="POST" style="max-width: 500px; margin: auto; display: flex; flex-direction: column; gap: 15px;">
+        <input type="text" name="name" placeholder="Your Name" style="padding: 12px; border-radius: 8px; border: 1px solid #ccc;" required>
+        <input type="email" name="email" placeholder="Your Email" style="padding: 12px; border-radius: 8px; border: 1px solid #ccc;" required>
+        <textarea name="message" placeholder="How can we help?" style="padding: 12px; border-radius: 8px; border: 1px solid #ccc; height: 100px;" required></textarea>
+        <button type="submit" style="background: #004aad; color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer;">Send Message</button>
+    </form>
+</div>
+
+</body>
+</html>

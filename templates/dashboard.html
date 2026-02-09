@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | TravelGo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-width: 260px;
+            --primary-accent: #00d2ff;
+            --bg-color: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background: var(--bg-color);
+            color: white;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-accent);
+            margin-bottom: 40px;
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 10px;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: var(--card-bg);
+            color: white;
+            box-shadow: inset 0 0 10px rgba(0, 210, 255, 0.1);
+        }
+
+        .logout-btn {
+            margin-top: auto;
+            color: #f87171 !important;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 40px 60px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-card span {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-card h3 {
+            margin: 10px 0 0 0;
+            font-size: 1.5rem;
+            color: var(--primary-accent);
+        }
+
+        /* History Table Container */
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.03);
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            padding: 20px;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .badge-Bus { background: rgba(255, 77, 77, 0.2); color: #ff4d4d; }
+        .badge-Flight { background: rgba(0, 210, 255, 0.2); color: #00d2ff; }
+        .badge-Train { background: rgba(39, 174, 96, 0.2); color: #2ecc71; }
+        .badge-Hotel { background: rgba(197, 160, 89, 0.2); color: #c5a059; }
+
+        /* Action Buttons styling */
+        .btn-action {
+            text-decoration: none;
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: 0.2s;
+            display: inline-block;
+        }
+
+        .btn-print {
+            color: var(--primary-accent);
+            border: 1px solid var(--primary-accent);
+        }
+
+        .btn-print:hover {
+            background: var(--primary-accent);
+            color: var(--bg-color);
+        }
+
+        @media (max-width: 900px) {
+            .sidebar { width: 80px; padding: 20px 10px; }
+            .sidebar h2, .nav-links a span { display: none; }
+            .main-content { margin-left: 80px; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <h2>TravelGo</h2>
+        <nav class="nav-links">
+            <a href="/dashboard" class="active"><span>📊 Dashboard</span></a>
+            <a href="/bus"><span>🚌 Book Bus</span></a>
+            <a href="/train"><span>🚂 Book Train</span></a>
+            <a href="/flight"><span>✈️ Book Flight</span></a>
+            <a href="/hotels"><span>🏨 Book Hotels</span></a>
+            <a href="/logout" class="logout-btn"><span>🚪 Logout</span></a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="header">
+            <h1>Welcome, {{ name }}!</h1>
+            <div style="color: #94a3b8;">{{ date }}</div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span>Total Bookings</span>
+                <h3>{{ bookings|length }}</h3>
+            </div>
+            <div class="stat-card">
+                <span>Active Trips</span>
+                <h3>1</h3>
+            </div>
+            <div class="stat-card">
+                <span>Membership</span>
+                <h3>Elite</h3>
+            </div>
+        </div>
+
+        <h3>Travel History</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Service</th>
+                        <th>Details</th>
+                        <th>Travel Date</th>
+                        <th>Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                    <tr>
+                        <td style="font-family: monospace; color: var(--primary-accent);">#{{ booking.booking_id }}</td>
+                        <td><span class="badge badge-{{ booking.type }}">{{ booking.type }}</span></td>
+                        <td>{{ booking.details }}</td>
+                        <td>{{ booking.date }}</td>
+                        <td style="font-weight: 600;">₹{{ booking.price }}</td>
+                        <td>
+                            <a href="{{ url_for('print_ticket', booking_id=booking.booking_id) }}" target="_blank" class="btn-action btn-print">
+                                Print 🖨️
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: #64748b;">No booking history found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+</html>

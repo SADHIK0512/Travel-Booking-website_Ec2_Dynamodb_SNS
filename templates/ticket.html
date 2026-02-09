@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TravelGo Ticket - {{ booking.booking_id }}</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; padding: 40px; background-color: #f0f2f5; }
+        .ticket { background: white; width: 450px; border-radius: 12px; border: 2px solid #333; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .header { background: #007bff; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; }
+        .item { margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .label { font-size: 12px; color: #666; text-transform: uppercase; }
+        .value { font-size: 18px; font-weight: bold; color: #222; }
+        .footer { text-align: center; padding: 20px; }
+        .btn-print { background: #28a745; color: white; border: none; padding: 10px 30px; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        
+        @media print {
+            .btn-print { display: none; }
+            body { background: white; padding: 0; }
+            .ticket { box-shadow: none; border: 1px solid #000; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ticket">
+        <div class="header">
+            <h2>{{ booking.type }} TICKET</h2>
+            <small>ID: {{ booking.booking_id }}</small>
+        </div>
+        <div class="content">
+            <div class="item">
+                <div class="label">Passenger Email</div>
+                <div class="value">{{ booking.email }}</div>
+            </div>
+            <div class="item">
+                <div class="label">Route</div>
+                <div class="value">{{ booking.source }} → {{ booking.destination }}</div>
+            </div>
+            <div class="item">
+                <div class="label">Travel Date</div>
+                <div class="value">{{ booking.date }}</div>
+            </div>
+            <div class="item">
+                <div class="label">Details & Seats</div>
+                <div class="value">{{ booking.details }}</div>
+            </div>
+            <div class="item">
+                <div class="label">Amount Paid</div>
+                <div class="value">₹{{ booking.price }}</div>
+            </div>
+        </div>
+        <div class="footer">
+            <button class="btn-print" onclick="window.print()">Print Ticket</button>
+        </div>
+    </div>
+</body>
+</html>

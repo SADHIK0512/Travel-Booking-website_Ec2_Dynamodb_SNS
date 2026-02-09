@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | TravelGo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00d2ff;
+            --accent: #f87171;
+            --bg: #0f172a;
+            --card: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: white;
+            margin: 0;
+            display: flex;
+        }
+
+        /* Sidebar Design */
+        .sidebar {
+            width: 240px;
+            background: rgba(0, 0, 0, 0.4);
+            height: 100vh;
+            padding: 30px 20px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+        }
+
+        .sidebar h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+        }
+
+        /* Main Area */
+        .main {
+            margin-left: 280px;
+            padding: 40px;
+            width: 100%;
+        }
+
+        .glass-card {
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            margin-top: 0;
+        }
+
+        /* Form Styling */
+        .admin-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .admin-form input, .admin-form select {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            color: white;
+            outline: none;
+        }
+
+        .admin-form input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-submit {
+            grid-column: 1 / -1;
+            background: linear-gradient(to right, #00d2ff, #3a7bd5);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4);
+        }
+
+        .logout-link {
+            display: block;
+            margin-top: 50px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <h2>TravelGo Admin</h2>
+        <nav>
+            <p style="color: #94a3b8; font-size: 0.8rem; text-transform: uppercase;">Management</p>
+            <a href="/dashboard" style="color: white; text-decoration: none; display: block; margin-bottom: 15px;">📊 View User Site</a>
+            <a href="/logout" class="logout-link">🚪 Logout</a>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <h1>Administrative Dashboard</h1>
+
+        <div class="glass-card">
+            <h3>Add New Transport Service</h3>
+            <form action="/admin/add_transport" method="POST" class="admin-form">
+                <select name="category" required>
+                    <option value="bus">Bus Service</option>
+                    <option value="train">Train Route</option>
+                    <option value="flight">Flight Schedule</option>
+                </select>
+                <input type="text" name="name" placeholder="Carrier Name (e.g., IndiGo)" required>
+                <input type="text" name="source" placeholder="Departure City" required>
+                <input type="text" name="destination" placeholder="Arrival City" required>
+                <input type="number" name="price" placeholder="Ticket Price (₹)" required>
+                <input type="text" name="details" placeholder="Service Details (e.g., AC Sleeper)" required>
+                <button type="submit" class="btn-submit">Register Transport</button>
+            </form>
+        </div>
+
+        <div class="glass-card">
+            <h3>Add New Hotel Listing</h3>
+            <form action="/admin/add_hotel" method="POST" class="admin-form">
+                <input type="text" name="name" placeholder="Hotel Name" required>
+                <input type="text" name="location" placeholder="City Location" required>
+                <input type="number" name="price" placeholder="Price per Night (₹)" required>
+                <input type="text" name="details" placeholder="Class (e.g., 5-Star Luxury)" required>
+                <button type="submit" class="btn-submit">Add Hotel</button>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>

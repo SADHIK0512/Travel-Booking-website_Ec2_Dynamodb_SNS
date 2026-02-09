@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailGo | Search Trains</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rail-green: #1b4d3e;
+            --rail-gold: #f1c40f;
+            --slate-bg: #f2f4f7;
+            --text-main: #2c3e50;
+        }
+
+        body {
+            font-family: 'Ubuntu', sans-serif;
+            margin: 0;
+            padding: 0;
+            /* Railway track perspective background */
+            background: linear-gradient(rgba(27, 77, 62, 0.7), rgba(27, 77, 62, 0.7)), 
+                        url('https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 850px;
+            margin: 50px 0;
+            background: var(--slate-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Search Header */
+        .search-header {
+            background: var(--rail-green);
+            padding: 40px;
+            color: white;
+            text-align: center;
+        }
+
+        h2 {
+            margin: 0 0 25px 0;
+            font-size: 2.2rem;
+            letter-spacing: -1px;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            align-items: end;
+        }
+
+        .input-group {
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+            color: var(--rail-gold);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .btn-search {
+            background: var(--rail-gold);
+            color: var(--rail-green);
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-search:hover {
+            transform: scale(1.03);
+            background: #f39c12;
+        }
+
+        /* Results Section */
+        .results-area {
+            padding: 30px;
+        }
+
+        .train-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 6px solid var(--rail-green);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .train-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--rail-green);
+            margin: 0;
+        }
+
+        .train-type {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            background: #ecf0f1;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .price-tag {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .btn-book {
+            background: var(--rail-green);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        .btn-book:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 600px) {
+            .train-card {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="search-header">
+            <h2>Train Bookings</h2>
+            <form class="search-form" method="POST">
+                <div class="input-group">
+                    <label>Source</label>
+                    <input type="text" name="source" placeholder="Origin Station" required>
+                </div>
+                <div class="input-group">
+                    <label>Destination</label>
+                    <input type="text" name="destination" placeholder="Destination" required>
+                </div>
+                <div class="input-group">
+                    <label>Date</label>
+                    <input type="date" name="date" required>
+                </div>
+                <button type="submit" class="btn-search">Find Trains</button>
+            </form>
+        </div>
+
+        {% if trains %}
+        <div class="results-area">
+            <h3 style="margin-top:0;">Available Routes</h3>
+            {% for train in trains %}
+            <div class="train-card">
+                <div>
+                    <p class="train-name">🚂 {{ train.name }}</p>
+                    <span class="train-type">{{ train.details }}</span>
+                </div>
+                
+                <div style="text-align: right;">
+                    <div class="price-tag">₹{{ train.price }}</div>
+                    <form action="/book" method="POST">
+                        <input type="hidden" name="type" value="Train">
+                        <input type="hidden" name="source" value="{{ source }}">
+                        <input type="hidden" name="destination" value="{{ destination }}">
+                        <input type="hidden" name="date" value="{{ date }}">
+                        <input type="hidden" name="details" value="{{ train.name }} {{ train.details }}">
+                        <input type="hidden" name="price" value="{{ train.price }}">
+                        <button type="submit" class="btn-book">Book Now</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>

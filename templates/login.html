@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelGo | Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #00d2ff;
+            --secondary-blue: #3a7bd5;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .login-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 50px 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            color: white;
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        p.subtitle {
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-top: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(to right, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.4);
+        }
+
+        .footer-text {
+            margin-top: 25px;
+            font-size: 0.9rem;
+        }
+
+        .footer-text a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        .admin-access-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: var(--primary-blue);
+            font-size: 0.85rem;
+            text-decoration: none;
+            border: 1px solid var(--primary-blue);
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .admin-access-btn:hover {
+            background: var(--primary-blue);
+            color: #000;
+        }
+
+        .home-link {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="/" class="home-link">← Back to Home</a>
+
+    <div class="login-card">
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Please enter your details to login.</p>
+        
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Email Address" required>
+            </div>
+            
+            <div class="form-group">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            
+            <button type="submit">Login</button>
+        </form>
+        
+        <p class="footer-text">
+            Don't have an account? <a href="/register">Register here</a>
+        </p>
+
+        
+    </div>
+
+</body>
+</html>
