@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyHigh | Search Flights</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0077ff;
+            --accent-blue: #00d4ff;
+            --dark-navy: #1a2a6c;
+            --glass-white: rgba(255, 255, 255, 0.9);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            /* Flight-themed background image */
+            background: linear-gradient(rgba(26, 42, 108, 0.5), rgba(26, 42, 108, 0.5)), 
+                        url('https://images.unsplash.com/photo-1436491865332-7a61a109c0f3?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 40px auto;
+            background: var(--glass-white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--dark-navy);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+
+        /* Search Form Layout */
+        .search-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 119, 255, 0.1);
+        }
+
+        .btn-search {
+            grid-column: span 3;
+            background: linear-gradient(to right, var(--primary-blue), var(--accent-blue));
+            color: white;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: opacity 0.3s;
+        }
+
+        .btn-search:hover {
+            opacity: 0.9;
+        }
+
+        /* Flight Card Styling */
+        .flight-results {
+            margin-top: 40px;
+        }
+
+        .flight-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #eee;
+            transition: transform 0.2s;
+        }
+
+        .flight-card:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-blue);
+        }
+
+        .airline-info strong {
+            font-size: 1.2rem;
+            color: var(--dark-navy);
+            display: block;
+        }
+
+        .flight-details {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .price-section {
+            text-align: right;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #27ae60;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .btn-book {
+            background: var(--dark-navy);
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+            .btn-search {
+                grid-column: span 1;
+            }
+            .flight-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            .price-section {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Book Your Flight</h2>
+        
+        <form class="search-form" method="POST">
+            <div class="input-group">
+                <label>From</label>
+                <input type="text" name="source" placeholder="Origin City" required>
+            </div>
+            
+            <div class="input-group">
+                <label>To</label>
+                <input type="text" name="destination" placeholder="Destination" required>
+            </div>
+
+            <div class="input-group">
+                <label>Travel Date</label>
+                <input type="date" name="date" required>
+            </div>
+            
+            <button type="submit" class="btn-search">Search Flights</button>
+        </form>
+
+        {% if flights %}
+        <div class="flight-results">
+            {% for flight in flights %}
+            <div class="flight-card">
+                <div class="airline-info">
+                    <strong>✈️ {{ flight.name }}</strong>
+                    <span class="flight-details">{{ flight.details }}</span>
+                </div>
+                
+                <div class="price-section">
+                    <span class="price">₹{{ flight.price }}</span>
+                    <form action="/book" method="POST">
+                        <input type="hidden" name="type" value="Flight">
+                        <input type="hidden" name="source" value="{{ source }}">
+                        <input type="hidden" name="destination" value="{{ destination }}">
+                        <input type="hidden" name="date" value="{{ date }}">
+                        <input type="hidden" name="details" value="{{ flight.name }} - {{ flight.details }}">
+                        <input type="hidden" name="price" value="{{ flight.price }}">
+                        <button type="submit" class="btn-book">Book Now</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
