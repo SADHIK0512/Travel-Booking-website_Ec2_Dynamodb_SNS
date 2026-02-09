@@ -110,6 +110,8 @@ def get_search_results(category, source, destination):
     return response.get('Items', [])
 
 @app.route('/bus', methods=['GET', 'POST'])
+
+@app.route('/buses', methods=['GET', 'POST'])
 def bus():
     if request.method == 'POST':
         s, d = request.form['source'].strip(), request.form['destination'].strip()
@@ -126,6 +128,7 @@ def train():
     return render_template('train.html', trains=None)
 
 @app.route('/flight', methods=['GET', 'POST'])
+@app.route('/flights', methods=['GET', 'POST'])
 def flight():
     if request.method == 'POST':
         s, d = request.form['source'].strip(), request.form['destination'].strip()
@@ -259,3 +262,4 @@ def home():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
+
